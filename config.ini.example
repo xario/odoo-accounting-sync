@@ -1,0 +1,64 @@
+# config.ini.example  –  Copy to config.ini and fill in your values.
+# config.ini is listed in .gitignore and must never be committed.
+
+[odoo]
+url          = https://yourcompany.odoo.com
+db           = yourdb
+user         = admin@example.com
+api_key      = your_api_key_here
+company_name = Your Company ApS
+language     = da_DK
+
+[csv]
+# Path to bank statement CSV, relative to this file.
+file = ref/your-bank-statement.csv
+
+[accounting]
+# Name of the bank journal in Odoo (Accounting → Configuration → Journals)
+bank_journal_name = Bank
+
+# Account code used as counterpart when no mapping rule matches and as
+# fallback when a looked-up code is missing.
+suspense_account_code = 999999
+
+# "true" to post/validate journal entries automatically; "false" for draft
+auto_post = false
+
+# "true" to preview only (no writes to Odoo)
+dry_run = false
+
+[loan]
+# Loan parameters
+principal         = 1000000.00
+loan_date         = 2023-01-01
+loan_name         = Shareholder loan
+asset_name        = Loan collateral asset
+initial_entry_ref = LOAN-INITIAL
+
+# Interest rate components
+diskonto_at_signing = 3.6
+spread              = 4.0
+effective_rate      = 7.6
+
+# Odoo account codes, journal, and asset group
+# Adjust to match your chart of accounts.
+account_asset            = 6060
+account_liability        = 7210
+account_interest_expense = 3690
+journal_code             = MISC
+asset_group_id           = 1
+
+[account_rules]
+# Keyword rules for classifying bank transactions.
+# Format: pattern = account_code
+# Rules are applied in order; first match wins (case-insensitive).
+# Add or remove rules to match your bank statement descriptions.
+Auditor Name      = 2670
+Bank package fee  = 3690
+Bank setup fee    = 3690
+Card fee          = 3690
+
+[account_fallbacks]
+# Fallback account codes when no keyword rule matches.
+expense = 3690
+income  = 6520
